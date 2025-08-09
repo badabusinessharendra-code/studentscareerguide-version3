@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Career Navigator Design System - Professional, Trust-Building, Growth-Oriented */
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --background: 220 30% 98%;
+    --foreground: 215 25% 15%;
+
+    /* Cards & Surfaces */
+    --card: 220 20% 100%;
+    --card-foreground: 215 25% 15%;
+
+    /* Interactive Elements */
+    --popover: 220 20% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Primary - Professional Blue */
+    --primary: 214 85% 55%;
+    --primary-foreground: 220 20% 100%;
+    --primary-muted: 214 50% 85%;
+
+    /* Secondary - Growth Green */
+    --secondary: 154 60% 50%;
+    --secondary-foreground: 220 20% 100%;
+    --secondary-muted: 154 40% 85%;
+
+    /* Success - Achievement Green */
+    --success: 142 76% 36%;
+    --success-foreground: 220 20% 100%;
+
+    /* Muted Tones */
+    --muted: 215 15% 95%;
+    --muted-foreground: 215 15% 55%;
+
+    /* Accent - Highlight Orange */
+    --accent: 25 95% 53%;
+    --accent-foreground: 220 20% 100%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 20% 100%;
+
+    /* Borders & Inputs */
+    --border: 215 15% 88%;
+    --input: 215 15% 90%;
+    --ring: 214 85% 55%;
+
+    /* Design System Properties */
+    --radius: 0.75rem;
+    
+    /* Custom Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(214 85% 55%), hsl(214 85% 45%));
+    --gradient-secondary: linear-gradient(135deg, hsl(154 60% 50%), hsl(154 60% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(214 85% 55%) 0%, hsl(154 60% 50%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 20% 100%) 0%, hsl(215 15% 98%) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px hsl(215 25% 15% / 0.08);
+    --shadow-md: 0 4px 16px hsl(215 25% 15% / 0.12);
+    --shadow-lg: 0 8px 32px hsl(215 25% 15% / 0.16);
+    --shadow-card: 0 1px 3px hsl(215 25% 15% / 0.1), 0 1px 2px hsl(215 25% 15% / 0.06);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    /* Dark Mode - Professional Night Theme */
+    --background: 215 25% 8%;
+    --foreground: 220 20% 95%;
+
+    --card: 215 25% 10%;
+    --card-foreground: 220 20% 95%;
+
+    --popover: 215 25% 10%;
+    --popover-foreground: 220 20% 95%;
+
+    --primary: 214 85% 60%;
+    --primary-foreground: 215 25% 8%;
+    --primary-muted: 214 30% 25%;
+
+    --secondary: 154 60% 55%;
+    --secondary-foreground: 215 25% 8%;
+    --secondary-muted: 154 30% 25%;
+
+    --success: 142 76% 42%;
+    --success-foreground: 215 25% 8%;
+
+    --muted: 215 20% 15%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 25 95% 58%;
+    --accent-foreground: 215 25% 8%;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 215 25% 8%;
+
+    --border: 215 20% 20%;
+    --input: 215 20% 18%;
+    --ring: 214 85% 60%;
+    
+    /* Dark Mode Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(214 85% 60%), hsl(214 85% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(154 60% 55%), hsl(154 60% 45%));
+    --gradient-hero: linear-gradient(135deg, hsl(214 85% 60%) 0%, hsl(154 60% 55%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(215 25% 12%) 0%, hsl(215 25% 8%) 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
