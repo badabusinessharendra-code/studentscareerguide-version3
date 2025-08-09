@@ -1,7 +1,7 @@
-import { TestResponse, CareerRecommendation } from "@/types/career";
+import { TestResponse, CareerRecommendation, StudentProfile } from "@/types/career";
 import { careers } from "@/data/careers";
 
-export function analyzeCareerMatches(responses: TestResponse[]): CareerRecommendation[] {
+export function analyzeCareerMatches(responses: TestResponse[], studentProfile?: StudentProfile | null): CareerRecommendation[] {
   const careerScores = new Map<string, { score: number; reasons: string[] }>();
 
   // Initialize all careers with base score
@@ -71,12 +71,64 @@ export function analyzeCareerMatches(responses: TestResponse[]): CareerRecommend
         addScore("doctor", healthScore, `Strong healthcare interest (${answer}/5)`, careerScores);
         break;
 
-      case "education_interest":
-        const eduScore = Number(answer) * 4;
-        addScore("teacher", eduScore, `Strong education interest (${answer}/5)`, careerScores);
+      case "public_service_interest":
+        const publicServiceScore = Number(answer) * 4;
+        addScore("civil-services", publicServiceScore, `Strong public service interest (${answer}/5)`, careerScores);
+        addScore("teacher", publicServiceScore * 0.6, `Public service mindset helpful for teaching`, careerScores);
+        break;
+
+      case "job_security_preference":
+        if (answer === "Job security and stability (Government jobs)") {
+          addScore("civil-services", 15, "Preference for government job security", careerScores);
+          addScore("teacher", 12, "Teaching offers good job security", careerScores);
+          addScore("doctor", 8, "Medical profession offers stability", careerScores);
+        } else if (answer === "High growth potential and entrepreneurship") {
+          addScore("software-developer", 15, "Tech offers high growth potential", careerScores);
+          addScore("digital-marketer", 12, "Marketing has entrepreneurial opportunities", careerScores);
+          addScore("content-creator", 10, "Content creation has growth potential", careerScores);
+        } else if (answer === "Work-life balance and family time") {
+          addScore("teacher", 15, "Teaching offers good work-life balance", careerScores);
+          addScore("graphic-designer", 10, "Design work can be flexible", careerScores);
+        } else if (answer === "High salary and financial rewards") {
+          addScore("software-developer", 18, "Tech offers high salaries", careerScores);
+          addScore("doctor", 15, "Medical profession is well-paid", careerScores);
+          addScore("chartered-accountant", 12, "CA profession offers good financial rewards", careerScores);
+        }
+        break;
+
+      case "relocation_willingness":
+        if (answer === "Yes, anywhere in India or abroad") {
+          addScore("software-developer", 12, "Willing to relocate for tech opportunities", careerScores);
+          addScore("data-analyst", 8, "Analytics roles available in metros", careerScores);
+        } else if (answer === "No, I want to work from my hometown") {
+          addScore("teacher", 12, "Teaching available everywhere", careerScores);
+          addScore("content-creator", 10, "Content creation can be done from anywhere", careerScores);
+          addScore("digital-marketer", 8, "Remote marketing opportunities", careerScores);
+        }
+        break;
+
+      case "english_comfort":
+        const englishScore = Number(answer) * 3;
+        addScore("software-developer", englishScore, `English comfort helps in tech (${answer}/5)`, careerScores);
+        addScore("digital-marketer", englishScore * 0.8, `English useful for marketing`, careerScores);
+        addScore("data-analyst", englishScore * 0.6, `English helpful for data roles`, careerScores);
+        break;
+
+      case "family_pressure":
+        const pressureScore = Number(answer);
+        if (pressureScore >= 4) {
+          addScore("doctor", 10, "Family expectations often favor medical career", careerScores);
+          addScore("software-developer", 8, "Engineering/tech is family-approved", careerScores);
+          addScore("civil-services", 8, "IAS/IPS brings family pride", careerScores);
+        }
         break;
     }
   });
+
+  // Apply student profile adjustments if available
+  if (studentProfile) {
+    applyProfileAdjustments(careerScores, studentProfile);
+  }
 
   // Convert to recommendations and sort by score
   const recommendations: CareerRecommendation[] = [];
@@ -108,5 +160,59 @@ function addScore(
   if (current) {
     current.score += points;
     current.reasons.push(reason);
+  }
+}
+
+function applyProfileAdjustments(
+  scores: Map<string, { score: number; reasons: string[] }>,
+  profile: StudentProfile
+) {
+  // Adjust scores based on student profile
+  
+  // Class-based adjustments
+  if (profile.class === "10th") {
+    addScore("teacher", 5, "Good career option after Class 10", scores);
+  }
+  
+  // Stream-based adjustments
+  if (profile.stream === "science") {
+    addScore("software-developer", 10, "Science background aligns with tech careers", scores);
+    addScore("doctor", 10, "Science stream required for medical career", scores);
+    addScore("data-analyst", 8, "Mathematical background helpful", scores);
+  } else if (profile.stream === "commerce") {
+    addScore("chartered-accountant", 12, "Commerce stream ideal for CA", scores);
+    addScore("digital-marketer", 8, "Business knowledge helpful", scores);
+  } else if (profile.stream === "arts") {
+    addScore("teacher", 10, "Arts stream good for teaching career", scores);
+    addScore("civil-services", 10, "Humanities background beneficial for UPSC", scores);
+  }
+  
+  // City tier adjustments  
+  if (profile.city === "tier3") {
+    addScore("teacher", 8, "Teaching has good opportunities in smaller cities", scores);
+    addScore("civil-services", 6, "Government jobs provide stability", scores);
+    // Reduce scores for careers requiring metro presence
+    const current = scores.get("software-developer");
+    if (current && current.score > 10) {
+      current.score = Math.max(current.score - 5, 10);
+      current.reasons.push("May require relocation to metros");
+    }
+  }
+  
+  // Language adjustments
+  if (profile.languages.includes("Hindi") && profile.languages.length > 1) {
+    addScore("teacher", 5, "Multilingual ability helpful in teaching", scores);
+    addScore("civil-services", 5, "Language skills advantage in administration", scores);
+  }
+  
+  // Exam preparation adjustments
+  if (profile.examPreparation?.includes("JEE Main/Advanced")) {
+    addScore("software-developer", 10, "JEE preparation shows technical aptitude", scores);
+  }
+  if (profile.examPreparation?.includes("NEET")) {
+    addScore("doctor", 15, "NEET preparation for medical career", scores);
+  }
+  if (profile.examPreparation?.includes("UPSC")) {
+    addScore("civil-services", 15, "Already preparing for civil services", scores);
   }
 }

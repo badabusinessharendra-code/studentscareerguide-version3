@@ -36,7 +36,10 @@ export const careers: CareerField[] = [
     workEnvironment: "IT parks in Bangalore, Hyderabad, Pune, Chennai, or remote work from home",
     personalityMatch: ["Analytical", "Problem-solver", "Detail-oriented", "Logical"],
     difficulty: 3,
-    satisfaction: 4.2
+    satisfaction: 4.2,
+    aiImpactScore: 7, // High AI resistance due to creative problem-solving
+    futureOutlook: "Thriving",
+    difficultyIndia: 3
   },
   {
     id: "graphic-designer",
@@ -73,7 +76,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Advertising agencies in Mumbai, creative studios, or freelance work from home",
     personalityMatch: ["Creative", "Visual thinker", "Detail-oriented", "Artistic"],
     difficulty: 2,
-    satisfaction: 4.0
+    satisfaction: 4.0,
+    aiImpactScore: 6, // AI can help but human creativity is still essential
+    futureOutlook: "Stable",
+    difficultyIndia: 2
   },
   {
     id: "data-analyst",
@@ -110,7 +116,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Corporate offices in metros, IT companies, banks, or remote analytics work",
     personalityMatch: ["Analytical", "Curious", "Detail-oriented", "Problem-solver"],
     difficulty: 3,
-    satisfaction: 4.1
+    satisfaction: 4.1,
+    aiImpactScore: 5, // AI is transforming data analysis but human insight remains crucial
+    futureOutlook: "Thriving",
+    difficultyIndia: 3
   },
   {
     id: "doctor",
@@ -147,7 +156,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Government hospitals, private clinics, AIIMS, PGI or own practice",
     personalityMatch: ["Empathetic", "Detail-oriented", "Problem-solver", "Helping others"],
     difficulty: 5,
-    satisfaction: 4.5
+    satisfaction: 4.5,
+    aiImpactScore: 9, // AI assists but human touch in healthcare is irreplaceable
+    futureOutlook: "Thriving",
+    difficultyIndia: 5
   },
   {
     id: "teacher",
@@ -184,7 +196,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Government schools, private schools, Kendriya Vidyalayas, or coaching centers",
     personalityMatch: ["Patient", "Communicative", "Helpful", "Organized"],
     difficulty: 2,
-    satisfaction: 4.3
+    satisfaction: 4.3,
+    aiImpactScore: 8, // AI can support teaching but human connection is vital
+    futureOutlook: "Stable",
+    difficultyIndia: 2
   },
   {
     id: "digital-marketer",
@@ -221,7 +236,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Digital agencies in Mumbai/Delhi, startups in Bangalore, or freelance from home",
     personalityMatch: ["Creative", "Analytical", "Communicative", "Tech-savvy"],
     difficulty: 2,
-    satisfaction: 3.9
+    satisfaction: 3.9,
+    aiImpactScore: 4, // AI is heavily impacting digital marketing
+    futureOutlook: "Stable",
+    difficultyIndia: 2
   },
   {
     id: "civil-services",
@@ -258,7 +276,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Government offices, districts, secretariats, and field locations across India",
     personalityMatch: ["Leadership", "Public service oriented", "Patient", "Ethical"],
     difficulty: 5,
-    satisfaction: 4.7
+    satisfaction: 4.7,
+    aiImpactScore: 10, // Human judgment and leadership cannot be replaced by AI
+    futureOutlook: "Stable",
+    difficultyIndia: 5
   },
   {
     id: "chartered-accountant",
@@ -295,7 +316,10 @@ export const careers: CareerField[] = [
     workEnvironment: "CA firms, corporate offices, banks, or independent practice from office",
     personalityMatch: ["Detail-oriented", "Analytical", "Trustworthy", "Mathematical"],
     difficulty: 4,
-    satisfaction: 4.2
+    satisfaction: 4.2,
+    aiImpactScore: 6, // AI automates some tasks but professional judgment needed
+    futureOutlook: "Stable",
+    difficultyIndia: 4
   },
   {
     id: "content-creator",
@@ -332,7 +356,10 @@ export const careers: CareerField[] = [
     workEnvironment: "Home studio, outdoor locations, or co-working spaces with flexible schedule",
     personalityMatch: ["Creative", "Communicative", "Self-motivated", "Tech-savvy"],
     difficulty: 3,
-    satisfaction: 4.1
+    satisfaction: 4.1,
+    aiImpactScore: 5, // AI tools help but personal branding and creativity remain human
+    futureOutlook: "Thriving",
+    difficultyIndia: 3
   }
 ];
 

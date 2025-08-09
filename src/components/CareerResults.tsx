@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { CareerRecommendation } from "@/types/career";
+import { CareerRecommendation, StudentProfile } from "@/types/career";
 import { 
   TrendingUp, 
   GraduationCap, 
@@ -18,9 +18,10 @@ interface CareerResultsProps {
   recommendations: CareerRecommendation[];
   onCareerSelect: (careerId: string) => void;
   onRetakeTest: () => void;
+  studentProfile?: StudentProfile | null;
 }
 
-export default function CareerResults({ recommendations, onCareerSelect, onRetakeTest }: CareerResultsProps) {
+export default function CareerResults({ recommendations, onCareerSelect, onRetakeTest, studentProfile }: CareerResultsProps) {
   const formatSalary = (min: number, max: number) => {
     return `$${(min / 1000).toFixed(0)}k - $${(max / 1000).toFixed(0)}k`;
   };
@@ -121,6 +122,19 @@ export default function CareerResults({ recommendations, onCareerSelect, onRetak
                       <div>
                         <p className="text-sm text-muted-foreground">Time to Start</p>
                         <p className="font-semibold text-sm">{career.education.duration}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Users className="w-5 h-5 text-primary" />
+                      <div>
+                        <p className="text-sm text-muted-foreground">AI Impact</p>
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-sm">{career.aiImpactScore}/10</span>
+                          <Badge variant={career.aiImpactScore >= 8 ? "secondary" : career.aiImpactScore >= 6 ? "outline" : "destructive"} className="text-xs">
+                            {career.aiImpactScore >= 8 ? "AI-Resistant" : career.aiImpactScore >= 6 ? "Adaptable" : "At Risk"}
+                          </Badge>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { CareerField } from "@/types/career";
+import { CareerField, StudentProfile } from "@/types/career";
 import { 
   ArrowLeft,
   DollarSign, 
@@ -23,9 +23,10 @@ import {
 interface CareerDetailProps {
   career: CareerField;
   onBack: () => void;
+  studentProfile?: StudentProfile | null;
 }
 
-export default function CareerDetail({ career, onBack }: CareerDetailProps) {
+export default function CareerDetail({ career, onBack, studentProfile }: CareerDetailProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
   const formatSalary = (min: number, max: number) => {

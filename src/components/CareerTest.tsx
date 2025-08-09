@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import { StudentProfile, TestResponse } from "@/types/career";
 
 interface Question {
   id: string;
@@ -10,11 +11,6 @@ interface Question {
   type: "multiple" | "scale";
   options?: string[];
   category: string;
-}
-
-interface TestResponse {
-  questionId: string;
-  answer: string | number;
 }
 
 const questions: Question[] = [
@@ -25,8 +21,8 @@ const questions: Question[] = [
     options: [
       "Working with people and teams",
       "Working with data and analysis", 
-      "Working with hands-on tasks and things",
-      "Working independently and creatively"
+      "Working with hands-on tasks and creative projects",
+      "Working independently with flexibility"
     ],
     category: "environment"
   },
@@ -43,8 +39,44 @@ const questions: Question[] = [
     category: "style"
   },
   {
+    id: "job_security_preference",
+    question: "What's more important to you?",
+    type: "multiple",
+    options: [
+      "Job security and stability (Government jobs)",
+      "High growth potential and entrepreneurship",
+      "Work-life balance and family time",
+      "High salary and financial rewards"
+    ],
+    category: "preference"
+  },
+  {
+    id: "relocation_willingness",
+    question: "Are you willing to relocate for better career opportunities?",
+    type: "multiple",
+    options: [
+      "Yes, anywhere in India or abroad",
+      "Yes, but only to major Indian cities",
+      "Yes, but prefer to stay in my state/region",
+      "No, I want to work from my hometown"
+    ],
+    category: "preference"
+  },
+  {
+    id: "english_comfort",
+    question: "How comfortable are you with English for professional work?",
+    type: "scale",
+    category: "skill"
+  },
+  {
+    id: "family_pressure",
+    question: "How much do family expectations influence your career choice?",
+    type: "scale", 
+    category: "social"
+  },
+  {
     id: "technology_interest",
-    question: "How interested are you in Technology?",
+    question: "How interested are you in Technology & Software?",
     type: "scale",
     category: "interest"
   },
@@ -71,14 +103,21 @@ const questions: Question[] = [
     question: "How interested are you in Education & Teaching?",
     type: "scale",
     category: "interest"
+  },
+  {
+    id: "public_service_interest",
+    question: "How interested are you in Public Service & Administration?",
+    type: "scale",
+    category: "interest"
   }
 ];
 
 interface CareerTestProps {
   onComplete: (responses: TestResponse[]) => void;
+  studentProfile?: StudentProfile | null;
 }
 
-export default function CareerTest({ onComplete }: CareerTestProps) {
+export default function CareerTest({ onComplete, studentProfile }: CareerTestProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [responses, setResponses] = useState<TestResponse[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string | number>("");
@@ -176,7 +215,7 @@ export default function CareerTest({ onComplete }: CareerTestProps) {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          {question.type === "scale" ? <ScaleQuestion /> : <MultipleChoiceQuestion />}
+        {question.type === "scale" ? <ScaleQuestion /> : <MultipleChoiceQuestion />}
 
           <div className="flex justify-between pt-6">
             <Button
@@ -193,10 +232,23 @@ export default function CareerTest({ onComplete }: CareerTestProps) {
               onClick={handleNext}
               disabled={currentAnswer === ""}
               className="flex items-center gap-2"
+              variant="hero"
             >
-              {currentQuestion === questions.length - 1 ? "Complete Test" : "Next"}
+              {currentQuestion === questions.length - 1 ? "Complete Assessment" : "Next"}
               <ArrowRight className="w-4 h-4" />
             </Button>
+          </div>
+
+          {/* Progress indicator */}
+          <div className="text-center pt-4">
+            <p className="text-sm text-muted-foreground">
+              {studentProfile?.class && (
+                <span className="inline-flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full">
+                  🎓 Class {studentProfile.class}
+                  {studentProfile.stream && ` • ${studentProfile.stream.charAt(0).toUpperCase() + studentProfile.stream.slice(1)}`}
+                </span>
+              )}
+            </p>
           </div>
         </CardContent>
       </Card>
