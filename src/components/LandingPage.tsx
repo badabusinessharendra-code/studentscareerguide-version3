@@ -17,9 +17,10 @@ import heroImage from "@/assets/hero-career.jpg";
 
 interface LandingPageProps {
   onStartTest: () => void;
+  onGovernmentHub?: () => void;
 }
 
-export default function LandingPage({ onStartTest }: LandingPageProps) {
+export default function LandingPage({ onStartTest, onGovernmentHub }: LandingPageProps) {
   const features = [
     {
       icon: Brain,
@@ -86,6 +87,17 @@ export default function LandingPage({ onStartTest }: LandingPageProps) {
                   Start Career Assessment
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
+                
+                {onGovernmentHub && (
+                  <Button 
+                    onClick={onGovernmentHub}
+                    variant="secondary"
+                    size="lg"
+                    className="text-lg px-8 py-6"
+                  >
+                    🏛️ Government Jobs Hub
+                  </Button>
+                )}
                 
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6">
                   Learn More

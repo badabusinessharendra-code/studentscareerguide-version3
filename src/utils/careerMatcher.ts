@@ -77,6 +77,54 @@ export function analyzeCareerMatches(responses: TestResponse[], studentProfile?:
         addScore("teacher", publicServiceScore * 0.6, `Public service mindset helpful for teaching`, careerScores);
         break;
 
+      // Government-specific question handling
+      case "govt_sector_preference":
+        if (answer === "Administrative Services (IAS, State PCS)") {
+          addScore("civil-services", 20, "Interested in administrative services", careerScores);
+        } else if (answer === "Police & Security (IPS, State Police)") {
+          addScore("civil-services", 15, "Interested in police services", careerScores);
+        } else if (answer === "Railways (Technical & Non-technical)") {
+          addScore("civil-services", 10, "Interested in railway services", careerScores);
+        } else if (answer === "Banking & Financial Services") {
+          addScore("chartered-accountant", 12, "Banking interest aligns with CA skills", careerScores);
+        } else if (answer === "Defense Forces") {
+          addScore("civil-services", 8, "Defense services require similar preparation", careerScores);
+        } else if (answer === "Teaching & Education") {
+          addScore("teacher", 18, "Direct interest in teaching services", careerScores);
+        }
+        break;
+
+      case "govt_exam_willingness":
+        const examWillingness = Number(answer) * 3;
+        addScore("civil-services", examWillingness, `Willingness to prepare for competitive exams (${answer}/5)`, careerScores);
+        addScore("teacher", examWillingness * 0.7, `Government teaching jobs require competitive exams`, careerScores);
+        break;
+
+      case "govt_posting_preference":
+        if (answer === "All India posting (willing to work anywhere)") {
+          addScore("civil-services", 15, "Willing for all-India posting suitable for IAS/IPS", careerScores);
+        } else if (answer === "State-level posting (within my state)") {
+          addScore("civil-services", 10, "State-level posting preference", careerScores);
+          addScore("teacher", 8, "State government teaching jobs", careerScores);
+        } else if (answer === "District-level posting (local area)") {
+          addScore("teacher", 12, "Local area preference suits teaching", careerScores);
+          addScore("civil-services", 8, "District-level administrative roles", careerScores);
+        }
+        break;
+
+      case "govt_work_nature":
+        if (answer === "Field work and public interaction") {
+          addScore("civil-services", 18, "Field work aligns with administrative services", careerScores);
+          addScore("teacher", 12, "Teaching involves public interaction", careerScores);
+        } else if (answer === "Office work and policy implementation") {
+          addScore("civil-services", 15, "Policy work is core of administrative services", careerScores);
+        } else if (answer === "Technical work and maintenance") {
+          addScore("software-developer", 10, "Technical skills valuable in government IT", careerScores);
+        } else if (answer === "Investigation and law enforcement") {
+          addScore("civil-services", 12, "Law enforcement aspect of IPS", careerScores);
+        }
+        break;
+
       case "job_security_preference":
         if (answer === "Job security and stability (Government jobs)") {
           addScore("civil-services", 15, "Preference for government job security", careerScores);
@@ -214,5 +262,20 @@ function applyProfileAdjustments(
   }
   if (profile.examPreparation?.includes("UPSC")) {
     addScore("civil-services", 15, "Already preparing for civil services", scores);
+  }
+  if (profile.examPreparation?.includes("SSC")) {
+    addScore("civil-services", 10, "SSC preparation shows government job interest", scores);
+  }
+  if (profile.examPreparation?.includes("Banking")) {
+    addScore("chartered-accountant", 8, "Banking exam preparation shows financial aptitude", scores);
+  }
+  if (profile.examPreparation?.includes("Railway")) {
+    addScore("civil-services", 8, "Railway exam preparation shows government sector interest", scores);
+  }
+
+  // State-specific adjustments
+  if (profile.state) {
+    addScore("teacher", 5, `Teaching opportunities available in ${profile.state}`, scores);
+    addScore("civil-services", 3, `State PCS opportunities in ${profile.state}`, scores);
   }
 }

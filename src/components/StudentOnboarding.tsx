@@ -6,8 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, ArrowLeft, GraduationCap, MapPin, BookOpen, Heart } from "lucide-react";
 import { StudentProfile } from "@/types/career";
+import { indianStates } from "@/data/governmentExams";
 
 interface StudentOnboardingProps {
   onComplete: (profile: StudentProfile) => void;
@@ -18,10 +20,11 @@ export default function StudentOnboarding({ onComplete, onBack }: StudentOnboard
   const [currentStep, setCurrentStep] = useState(0);
   const [profile, setProfile] = useState<Partial<StudentProfile>>({
     languages: ["English"],
-    examPreparation: []
+    examPreparation: [],
+    state: ""
   });
 
-  const totalSteps = 4;
+  const totalSteps = 5;
   const progress = ((currentStep + 1) / totalSteps) * 100;
 
   const handleNext = () => {
@@ -47,9 +50,10 @@ export default function StudentOnboarding({ onComplete, onBack }: StudentOnboard
   const isStepComplete = () => {
     switch (currentStep) {
       case 0: return profile.class;
-      case 1: return profile.city;
-      case 2: return profile.languages && profile.languages.length > 0;
-      case 3: return true;
+      case 1: return profile.state;
+      case 2: return profile.city;
+      case 3: return profile.languages && profile.languages.length > 0;
+      case 4: return true;
       default: return false;
     }
   };
@@ -148,6 +152,31 @@ export default function StudentOnboarding({ onComplete, onBack }: StudentOnboard
           <div className="space-y-6">
             <div className="text-center mb-6">
               <MapPin className="w-16 h-16 mx-auto mb-4 text-primary" />
+              <h2 className="text-2xl font-bold mb-2">आपका राज्य</h2>
+              <p className="text-muted-foreground">Which state are you from? This helps with government exam recommendations.</p>
+            </div>
+            
+            <Select 
+              value={profile.state} 
+              onValueChange={(value) => updateProfile('state', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select your state" />
+              </SelectTrigger>
+              <SelectContent>
+                {indianStates.map(state => (
+                  <SelectItem key={state} value={state}>{state}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <MapPin className="w-16 h-16 mx-auto mb-4 text-primary" />
               <h2 className="text-2xl font-bold mb-2">आपका शहर</h2>
               <p className="text-muted-foreground">Where are you from? This helps us understand opportunities.</p>
             </div>
@@ -188,7 +217,7 @@ export default function StudentOnboarding({ onComplete, onBack }: StudentOnboard
           </div>
         );
 
-      case 2:
+      case 3:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -219,7 +248,7 @@ export default function StudentOnboarding({ onComplete, onBack }: StudentOnboard
             <div className="mt-6">
               <Label className="text-base font-medium mb-3 block">Are you preparing for any exams?</Label>
               <div className="space-y-2">
-                {["JEE Main/Advanced", "NEET", "CLAT", "CAT", "GATE", "UPSC", "Banking Exams", "State PSC"].map((exam) => (
+                {["JEE Main/Advanced", "NEET", "CLAT", "CAT", "GATE", "UPSC", "SSC", "Banking", "Railway", "State PSC", "Police", "Teaching (TET/CTET)"].map((exam) => (
                   <div key={exam} className="flex items-center space-x-2">
                     <Checkbox
                       id={exam}
@@ -240,7 +269,7 @@ export default function StudentOnboarding({ onComplete, onBack }: StudentOnboard
           </div>
         );
 
-      case 3:
+      case 4:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">

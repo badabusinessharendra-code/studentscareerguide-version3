@@ -5,11 +5,12 @@ import StreamSelector from "@/components/StreamSelector";
 import CareerTest from "@/components/CareerTest";
 import CareerResults from "@/components/CareerResults";
 import CareerDetail from "@/components/CareerDetail";
+import GovernmentCareerHub from "@/components/GovernmentCareerHub";
 import { TestResponse, CareerRecommendation, StudentProfile } from "@/types/career";
 import { analyzeCareerMatches } from "@/utils/careerMatcher";
 import { getCareerById } from "@/data/careers";
 
-type AppState = "landing" | "onboarding" | "stream-selector" | "test" | "results" | "detail";
+type AppState = "landing" | "onboarding" | "stream-selector" | "test" | "results" | "detail" | "government-hub";
 
 const Index = () => {
   const [currentState, setCurrentState] = useState<AppState>("landing");
@@ -21,6 +22,10 @@ const Index = () => {
 
   const handleStartTest = () => {
     setCurrentState("onboarding");
+  };
+
+  const handleGovernmentHub = () => {
+    setCurrentState("government-hub");
   };
 
   const handleOnboardingComplete = (profile: StudentProfile) => {
@@ -76,7 +81,10 @@ const Index = () => {
 
   switch (currentState) {
     case "landing":
-      return <LandingPage onStartTest={handleStartTest} />;
+      return <LandingPage onStartTest={handleStartTest} onGovernmentHub={handleGovernmentHub} />;
+    
+    case "government-hub":
+      return <GovernmentCareerHub studentProfile={studentProfile} onBack={handleBackToLanding} />;
     
     case "onboarding":
       return (

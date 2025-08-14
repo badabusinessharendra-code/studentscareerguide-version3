@@ -3,6 +3,7 @@ export interface StudentProfile {
   stream?: "science" | "commerce" | "arts";
   board?: "cbse" | "icse" | "state";
   city: "tier1" | "tier2" | "tier3";
+  state?: string;
   languages: string[];
   examPreparation?: string[];
   parentExpectations?: string;
